@@ -21,6 +21,7 @@ app.get("/", (req, res) => res.send("API Running!"));
 
 app.use("/api/todoTasks", todoTaskRouter);
 app.use("/api/users", userRouter);
+app.use(customMiddleware.unknownEndpoint);
 
 // app.use(customMiddleware.unknownEndpoint);
 // app.use(customMiddleware.errorHandler);
