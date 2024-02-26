@@ -2,9 +2,11 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
-const todoTaskRouter = require("./routers/todoTaskRouter");  
-const customMiddleware = require("./middleware/customMiddleware");
+const todoTaskRouter = require("./routers/todoTaskRouter");
 const userRouter = require("./routers/userRouter");
+const blogRouter = require("./routers/blogRouter");
+const customMiddleware = require("./middleware/customMiddleware");
+
 
 // Express app
 const app = express();
@@ -21,10 +23,10 @@ app.get("/", (req, res) => res.send("API Running!"));
 
 app.use("/api/todoTasks", todoTaskRouter);
 app.use("/api/users", userRouter);
+app.use("/api/blogs", blogRouter);
 app.use(customMiddleware.unknownEndpoint);
 
-// app.use(customMiddleware.unknownEndpoint);
-// app.use(customMiddleware.errorHandler);
+app.use(customMiddleware.errorHandler);
 
 
 const port = process.env.PORT || 4000;
