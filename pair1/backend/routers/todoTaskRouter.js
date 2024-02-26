@@ -7,7 +7,10 @@ const {
   deleteTodoTask,
   updateTodoTask,
 } = require("../controllers/todoTaskController");
+const requireAuth = require("../middleware/requireAuth");
 
+// require auth for all workout routes
+router.use(requireAuth)
 
 // GET all TodoTasks
 router.get('/', getTodoTasks);
