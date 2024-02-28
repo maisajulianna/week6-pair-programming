@@ -9,11 +9,6 @@ const {
 } = require("../controllers/blogController");
 
 
-const requireAuth = require("../middleware/requireAuth");
-
-// require auth for all workout routes
-router.use(requireAuth)
-
 // GET all Blogs
 router.get('/', getBlogs);
 

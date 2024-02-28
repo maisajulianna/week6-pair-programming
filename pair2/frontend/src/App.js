@@ -38,7 +38,7 @@ function App() {
                 !isAuthenticated ? (
                   <SignupComponent setIsAuthenticated={setIsAuthenticated} />
                 ) : (
-                  <Navigate to="/" />
+                  <Navigate to="/login" />
                 )
               }
             />

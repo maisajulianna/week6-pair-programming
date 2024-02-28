@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Navbar({ setIsAuthenticated, isAuthenticated }) {
+function Navbar({ setIsAuthenticated, isAuthenticated }) {  
   const handleClick = () => {
     // remove user from storage
     localStorage.removeItem("user");

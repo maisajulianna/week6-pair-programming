@@ -1,58 +1,27 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import useLogin from '../hooks/useLogin';
 
-const LoginComponent = ({ setIsAuthenticated }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-
-  const handleLogin = async () => {
-    try {
-      const response = await fetch("/api/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        const user = await response.json();
-        localStorage.setItem("user", JSON.stringify(user));
-        console.log("User logged in successfully!");
-        setIsAuthenticated(true);
-        navigate("/");
-      } else {
-        console.error("Login failed");
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-    }
-  };
+const LoginComponent = () => {
+  const { formData, handleChange, handleSubmit } = useLogin();
 
   return (
-    <div>
-      <h2>Login</h2>
-      <label>
-        Username:
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </label>
-      <br />
-      <button onClick={handleLogin}>Log In</button>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="Email"
+      />
+      <input
+        type="password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+        placeholder="Password"
+      />
+      <button type="submit">Login</button>
+    </form>
   );
 };
 

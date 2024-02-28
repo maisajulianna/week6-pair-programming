@@ -1,59 +1,28 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useSignup from "../hooks/useSignup";
+import useField from "../hooks/useField";
 
-const SignupComponent = ({ setIsAuthenticated }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-
-  const handleSignup = async () => {
-    try {
-      const response = await fetch("/api/user/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        const user = await response.json();
-        localStorage.setItem("user", JSON.stringify(user));
-        console.log("User signed up successfully!");
-        setIsAuthenticated(true);
-        navigate("/");
-      } else {
-        console.error("Signup failed");
-      }
-    } catch (error) {
-      console.error("Error during signup:", error);
-    }
+const Signup = () => {
+  const username = useField("text");
+  const email = useField("email");
+  const password = useField("password");
+  const { signup, error, isLoading } = useSignup();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signup(username.value, email.value, password.value);
   };
-
   return (
-    <div>
-      <h2>Signup</h2>
-      <label>
-        email:
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </label>
-      <br />
-      <button onClick={handleSignup}>Sign Up</button>
-    </div>
+    <form className="signup" onSubmit={handleSubmit}>
+      <h3>Sign Up</h3>
+      <label>Username:</label>
+      <input {...username} />
+      <label>Email address:</label>
+      <input {...email} />
+      <label>Password:</label>
+      <input {...password} />
+      <button disabled={isLoading}>Sign up</button>
+      {error && <div className="error">{error}</div>}
+    </form>
   );
 };
 
-export default SignupComponent;
+export default Signup;
