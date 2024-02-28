@@ -5,6 +5,7 @@ import LoginComponent from "./pages/LoginComponent";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     JSON.parse(localStorage.getItem("user")) || false
@@ -48,5 +49,6 @@ function App() {
     </>
   );
 }
+
 
 export default App;

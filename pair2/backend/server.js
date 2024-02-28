@@ -2,11 +2,12 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
+mongoose.set("strictQuery", true);
+
 const workoutRoutes = require("./routes/workouts");
 const userRoutes = require("./routes/user");
-mongoose.set("strictQuery", true);
-// express app
 const app = express();
+
 
 // middleware
 app.use(cors());
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 // routes
 app.use("/api/workouts", workoutRoutes);
 app.use("/api/user", userRoutes);
+
 
 // connect to db
 mongoose
